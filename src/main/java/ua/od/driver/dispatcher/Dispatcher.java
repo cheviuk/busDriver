@@ -1,5 +1,6 @@
 package ua.od.driver.dispatcher;
 
+import com.google.gson.Gson;
 import com.jayway.jsonpath.JsonPath;
 
 import javax.ws.rs.*;
@@ -69,5 +70,16 @@ public class Dispatcher {
         Driver driver = Dispatcher.getDriverByID(driverId);
         driver.setBusPosition(new Position(lat, lng));
         return Response.status(201).entity("{\"message\":\"updated position\"}").build();
+    }
+
+    @POST
+    @Path("/getall")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getall(String requestBody){
+        String route = JsonPath.read(requestBody, "$.route");
+        ArrayList<Driver> drivers = Dispatcher.getDriversByRouteNumber(Integer.parseInt(route));
+        Gson gson = new Gson();
+        return Response.status(200).entity(gson.toJson(drivers)).build();
     }
 }
