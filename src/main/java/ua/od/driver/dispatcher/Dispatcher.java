@@ -1,9 +1,8 @@
 package ua.od.driver.dispatcher;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import com.jayway.jsonpath.JsonPath;
+
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.math.BigInteger;
@@ -54,5 +53,21 @@ public class Dispatcher {
         Driver driver = new Driver("Vasyan", new Position(0.0, 0.0), new BigInteger("123"), 201);
         Dispatcher.addDriver(driver);
         return Response.status(200).entity("{\"message\":\"добавлен тестовый водила\"}").build();
+    }
+
+    @POST
+    @Path("/updateposition")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updatePosition(String requestBody){
+        double lat, lng;
+        BigInteger driverId;
+
+        driverId = JsonPath.read(requestBody, "$.id");
+        lat = JsonPath.read(requestBody, "$.lat");
+        lng = JsonPath.read(requestBody, "$.lng");
+        Driver driver = Dispatcher.getDriverByID(driverId);
+        driver.setBusPosition(new Position(lat, lng));
+        return Response.status(201).entity("{\"message\":\"updated position\"}").build();
     }
 }
