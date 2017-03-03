@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.mkyong.rest</groupId>
-    <artifactId>RESTfulExample</artifactId>
+    <artifactId>busDriver</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>RESTfulExample Maven Webapp</name>
@@ -53,10 +53,11 @@
                 <version>2.2</version>
                 <configuration>
                     <url>http://localhost:8080/manager/text</url>
-                    <server>TomcatServer</server>
+                    <server>tomcatserver</server>
                     <path>/busDriver</path>
                     <username>manager</username>
                     <password>manager</password>
+                    <update>true</update>
                     <!-- -Xdebug
 -Xrunjdwp:transport=dt_socket,address=8080,server=y,suspend=n
 -->

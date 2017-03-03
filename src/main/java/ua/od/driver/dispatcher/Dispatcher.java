@@ -21,11 +21,11 @@ public class Dispatcher {
    static private LinkedList<Driver> drivers = new LinkedList<Driver>();
    static private LinkedList<Route> routes = new LinkedList<Route>();
 
-   public static void addDriver(Driver driver){
+   private static void addDriver(Driver driver){
        drivers.add(driver);
    }
 
-   public static Driver getDriverByID(BigInteger id){
+   private static Driver getDriverByID(BigInteger id){
        for(Driver driver : drivers){
            if(driver.getId().equals(id)){
                return driver;
@@ -34,17 +34,14 @@ public class Dispatcher {
        return null;
    }
 
-    @GET
-    @Path(value = "/drivers/{route:^\\d*$}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public static ArrayList<Driver> getDriversByRouteNumber(@PathParam(value = "route")int routeNumber) {
-        ArrayList<Driver> drivers = new ArrayList<Driver>();
-        for(Driver driver : drivers){
+    private static ArrayList<Driver> getDriversByRouteNumber(int routeNumber){
+       ArrayList<Driver> driversResult = new ArrayList<Driver>();
+       for(Driver driver : Dispatcher.drivers){
             if(driver.getRouteNumber() == routeNumber){
-                drivers.add(driver);
+                driversResult.add(driver);
             }
         }
-        return drivers;
+        return driversResult;
     }
 
     @GET
